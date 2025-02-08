@@ -77,7 +77,6 @@ def compute_part_one(file_name: str) -> int:
 
 def compute_part_two(file_name: str) -> int:
     instructions = read_input_file(file_name)
-    print(instructions)
     direction = 0
     position = (0, 0)
     visited_locations = set()
@@ -87,7 +86,7 @@ def compute_part_two(file_name: str) -> int:
         direction, position = process_instruction(position, direction, instruction)
         visited_locations, visited_twice = add_positions(previous_position, position, visited_locations)
         if visited_twice:
-            print(visited_twice)
+            print(f'{visited_twice= }')
             break
         else:
             previous_position = position
