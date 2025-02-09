@@ -1,46 +1,18 @@
-import turtle
+def locate_element(matrix, target):
+    for r, row in enumerate(matrix):
+        for c, element in enumerate(row):
+            if element == target:
+                return r, c
+    return None  # If the target is not found
 
-# Set up the screen
-screen = turtle.Screen()
-screen.title("Turtle Coordinate System")
-screen.bgcolor("white")
+# Example usage
+matrix = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
+]
+target = 5
+position = locate_element(matrix, target)
 
-# Create a turtle
-t = turtle.Turtle()
-t.shape("turtle")
-t.color("blue")
-
-# Move to different coordinates
-# Move to (100, 100)
-t.penup()
-t.goto(150, 100)
-t.pendown()
-t.write("(150, 100)")
-
-# Move to (-100, 100)
-t.penup()
-t.goto(-100, 100)
-t.pendown()
-t.write("(-100, 100)")
-
-# Move to (-100, -100)
-t.penup()
-t.goto(-100, -100)
-t.pendown()
-t.write("(-100, -100)")
-
-# Move to (100, -100)
-t.penup()
-t.goto(100, -100)
-t.pendown()
-t.write("(100, -100)")
-
-# Return to origin
-t.penup()
-t.goto(0, 0)
-t.pendown()
-t.write("(0, 0)")
-
-# Hide the turtle and display the window
-t.hideturtle()
-turtle.done()
+if position:
+    print(f"Element {target} found at position {position}")

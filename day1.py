@@ -33,7 +33,7 @@ def process_instruction(position, direction, instruction) -> (int, int):
     return direction, position
 
 
-def add_positions(previous_position, position, visited_locations) -> set:
+def add_positions(previous_position, position, visited_locations):
     visited_twice = None
     x1, y1 = previous_position
     x2, y2 = position
@@ -60,7 +60,7 @@ def add_positions(previous_position, position, visited_locations) -> set:
     return visited_locations, visited_twice
 
 
-def compute_part_one(file_name: str) -> int:
+def compute_part_one(file_name: str) -> str:
     instructions = read_input_file(file_name)
     print(instructions)
     direction = 0
@@ -68,14 +68,13 @@ def compute_part_one(file_name: str) -> int:
 
     for instruction in instructions:
         direction, position = process_instruction(position, direction, instruction)
-        # print(direction, position)
 
     distance = calculate_distance(position)
 
     return f'{distance= }'
 
 
-def compute_part_two(file_name: str) -> int:
+def compute_part_two(file_name: str) -> str:
     instructions = read_input_file(file_name)
     direction = 0
     position = (0, 0)
