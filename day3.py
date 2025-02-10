@@ -38,9 +38,6 @@ def compute_part_one(file_name: str) -> str:
 
     return f'{valid_triplets= }'
 
-    # alternative
-    # valid_triplets = sum(1 for a, b, c in triplets if check_valid_triangle(a, b, c))
-
 
 def compute_part_two(file_name: str) -> str:
     triplets = read_input_file(file_name)
