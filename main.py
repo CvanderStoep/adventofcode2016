@@ -1,16 +1,34 @@
-def caesar_encrypt(text, shift):
-    encrypted_text = []
-    for char in text:
-        if char.isalpha():  # Check if the character is a letter
-            shift_base = ord('a') if char.islower() else ord('A')
-            encrypted_char = chr((ord(char) - shift_base + shift) % 26 + shift_base)
-            encrypted_text.append(encrypted_char)
-        else:
-            encrypted_text.append(char)  # Non-letter characters are added as-is
-    return ''.join(encrypted_text)
+import time
+import random
+import sys
+
+def decrypt_animation(encrypted_text, decrypted_text):
+    # Clear the output
+    def clear_output():
+        sys.stdout.write('\r' + ' ' * len(encrypted_text) + '\r')
+
+    # Create a pool of possible characters
+    pool = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+
+    for i in range(len(decrypted_text)):
+        for _ in range(10):  # Simulate multiple attempts
+            clear_output()
+            # Randomly replace each character with a character from the pool
+            intermediate_text = encrypted_text[:i] + ''.join(random.choice(pool) for _ in range(len(decrypted_text) - i))
+            sys.stdout.write(intermediate_text)
+            sys.stdout.flush()
+            time.sleep(0.05)
+
+        # Set the correct character at position i
+        encrypted_text = encrypted_text[:i] + decrypted_text[i] + encrypted_text[i + 1:]
+        clear_output()
+        sys.stdout.write(encrypted_text)
+        sys.stdout.flush()
+        time.sleep(0.1)
+
+    print("\nDecryption Complete!")
 
 # Example usage
-plaintext = "hello-world"
-shift = 3
-encrypted = caesar_encrypt(plaintext, shift)
-print("Encrypted:", encrypted)
+encrypted_text = "????????"
+decrypted_text = "999828ec"
+decrypt_animation(encrypted_text, decrypted_text)

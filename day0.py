@@ -9,7 +9,7 @@ def read_input_file(file_name: str) -> list:
     return content
 
 
-def compute_part_one(file_name: str) -> int:
+def compute_part_one(file_name: str) -> str:
     content = read_input_file(file_name)
     print(content)
 
@@ -17,7 +17,7 @@ def compute_part_one(file_name: str) -> int:
 
 
 
-def compute_part_two(file_name: str) -> int:
+def compute_part_two(file_name: str) -> str:
     content = read_input_file(file_name)
     return "part 2 not yet implemented"
 

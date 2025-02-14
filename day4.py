@@ -35,6 +35,13 @@ def count_letters(s: str) -> dict:
     letter_counts = {k: v for k, v in letter_counts.items() if k.isalpha()}
     return letter_counts
 
+def parse_room(room):
+    match = re.match(r'([a-z-]+)-(\d+)\[([a-z]+)\]', room)
+    if match:
+        encrypted_name, sector_id, checksum = match.groups()
+        return encrypted_name.replace('-', ''), int(sector_id), checksum
+    return None, None, None
+
 
 def split_string(s):
     """
@@ -51,30 +58,25 @@ def split_string(s):
         return None, None
 
 
-def check_room(room: str) -> tuple[int, bool]:
+def is_real_room(room: str) -> tuple[int, bool]:
     """
     check if the room is valid, return both the ID and boolean value
     """
-    part1, part2 = split_string(room)
-    room_letters = re.findall(r'[a-z]', part1)
-    room_letters = ''.join(room_letters)
-    id = int(re.findall(r'\d+', room)[0])
-    check_sum = part2[1:-1]
-
-    letter_count = count_letters(room_letters)
+    encrypted_name, sector_id, checksum = parse_room(room)
+    letter_count = count_letters(encrypted_name)
     top_n = get_top_n_values(letter_count, 5)
     for key, _ in top_n:
-        if key not in check_sum:
-            return id, False
+        if key not in checksum:
+            return sector_id, False
 
-    return id, True
+    return sector_id, True
 
 
 def compute_part_one(file_name: str) -> str:
     rooms = read_input_file(file_name)
     sum_id = 0
     for room in rooms:
-        id, valid_room = check_room(room)
+        id, valid_room = is_real_room(room)
         if valid_room:
             sum_id += id
 
