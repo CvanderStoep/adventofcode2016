@@ -8,7 +8,7 @@ def read_input_file(file_name: str) -> list:
     return content
 
 
-def yield_aba(part: str):
+def yield_aba(part: str) -> str:
     for i in range(len(part) - 2):
         l1 = part[i]
         l2 = part[i + 1]
@@ -17,7 +17,7 @@ def yield_aba(part: str):
             yield part[i:i + 3]
 
 
-def has_corresponding_bab(aba, inside_parts):
+def has_corresponding_bab(aba: str, inside_parts: list) -> bool:
     bab = aba[1] + aba[0] + aba[1]
     return any(bab in part for part in inside_parts)
 
@@ -34,7 +34,7 @@ def is_abba(part: str) -> bool:
     return False
 
 
-def split_and_label_string(s):
+def split_and_label_string(s) -> list:
     # Use regular expression to find parts inside and outside square brackets
     parts = re.split(r'(\[[^\]]+\])', s)
     labeled_parts = []
@@ -46,7 +46,7 @@ def split_and_label_string(s):
     return labeled_parts
 
 
-def is_valid_address(address: str) -> bool:
+def is_valid_tls_address(address: str) -> bool:
     parts = split_and_label_string(address)
     has_abba_outside = False
 
@@ -59,11 +59,24 @@ def is_valid_address(address: str) -> bool:
     return has_abba_outside
 
 
+def is_valid_ssl_address(address: str) -> bool:
+    parts = split_and_label_string(address)
+    outside_parts = [part_content for part_type, part_content in parts if part_type == 'outside_brackets']
+    inside_parts = [part_content for part_type, part_content in parts if part_type == 'inside_brackets']
+
+    for outside_part in outside_parts:
+        for aba in yield_aba(outside_part):
+            if has_corresponding_bab(aba, inside_parts):
+                return True
+
+    return False
+
+
 def compute_part_one(file_name: str) -> str:
     addresses = read_input_file(file_name)
     number_valid_addresses = 0
     for address in addresses:
-        if is_valid_address(address):
+        if is_valid_tls_address(address):
             number_valid_addresses += 1
 
     return f'{number_valid_addresses= }'
@@ -73,19 +86,7 @@ def compute_part_two(file_name: str) -> str:
     addresses = read_input_file(file_name)
     number_valid_addresses = 0
     for address in addresses:
-        parts = split_and_label_string(address)
-        outside_parts = [part_content for part_type, part_content in parts if part_type == 'outside_brackets']
-        inside_parts = [part_content for part_type, part_content in parts if part_type == 'inside_brackets']
-
-        valid_address = False
-        for outside_part in outside_parts:
-            for aba in yield_aba(outside_part):
-                if has_corresponding_bab(aba, inside_parts):
-                    valid_address = True
-                    break
-            if valid_address:
-                break
-        if valid_address:
+        if is_valid_ssl_address(address):
             number_valid_addresses += 1
 
     return f'{number_valid_addresses= }'
