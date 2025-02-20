@@ -1,25 +1,32 @@
-import re, numpy as np
+import re
 
-def display(s):
-    print('\n'.join(''.join('X' if p else ' '  for p in row) for row in s))
 
-def run(width, height, lines):
-    s = np.zeros((height, width), dtype=bool)
-    for line in lines:
-        p = re.split(r'[ =]', line)
-        if p[0] == 'rect':
-            w, h = map(int, p[1].split('x'))
-            s[:h, :w] = True
-        elif p[0] == 'rotate':
-            if p[1] == 'row':
-                cy, n = int(p[3]), int(p[5])
-                s[cy] = np.roll(s[cy], n)
+def decompress_string_version2c(content: str) -> int:
+    if '(' not in content:
+        return len(content)
+
+    def decompress(content):
+        total_length = 0
+        i = 0
+
+        while i < len(content):
+            if content[i] == '(':
+                end_marker = content.find(')', i)
+                marker = content[i + 1:end_marker]
+                a, b = map(int, marker.split('x'))
+                i = end_marker + 1
+                repeat_segment = content[i:i + a]
+                total_length += b * decompress_string_version2c(repeat_segment)
+                i += a
             else:
-                cx, n = int(p[3]), int(p[5])
-                s[:,cx] = np.roll(s[:,cx], n)
-    return s
+                total_length += 1
+                i += 1
 
-answer = run(50, 6, open('input/input8.txt'))
-print('Answer #1:', np.sum(answer))
-print('Answer #2:')
-display(answer)
+        return total_length
+
+    return decompress(content)
+
+
+# Example usage
+compressed_content = "(27x12)(20x12)(13x14)(7x10)(1x12)A"
+print(decompress_string_version2b(compressed_content))

@@ -10,7 +10,7 @@ def read_input_file(file_name: str) -> list:
 
 
 def process_operation(screen, operation):
-    a, b = re.findall(f'\d+', operation)
+    a, b = re.findall(r'\d+', operation)
     a = int(a)
     b = int(b)
     if 'rect' in operation:
@@ -32,7 +32,7 @@ def display_screen(screen) -> None:
     for i in range(rows):
         for j in range(cols):
             if screen[i, j] == 1:
-                print('X', end='')
+                print('#', end='')
             else:
                 print(' ', end='')
         print()
