@@ -1,32 +1,35 @@
-import re
+import re, collections
 
 
-def decompress_string_version2c(content: str) -> int:
-    if '(' not in content:
-        return len(content)
-
-    def decompress(content):
-        total_length = 0
-        i = 0
-
-        while i < len(content):
-            if content[i] == '(':
-                end_marker = content.find(')', i)
-                marker = content[i + 1:end_marker]
-                a, b = map(int, marker.split('x'))
-                i = end_marker + 1
-                repeat_segment = content[i:i + a]
-                total_length += b * decompress_string_version2c(repeat_segment)
-                i += a
-            else:
-                total_length += 1
-                i += 1
-
-        return total_length
-
-    return decompress(content)
+bot = collections.defaultdict(list)
+output = collections.defaultdict(list)
 
 
-# Example usage
-compressed_content = "(27x12)(20x12)(13x14)(7x10)(1x12)A"
-print(decompress_string_version2b(compressed_content))
+with open('input/input10.txt') as fp:
+    instructions = fp.read().splitlines()
+
+
+pipeline = {}
+for line in instructions:
+    if line.startswith('value'):
+        n, b = map(int,re.findall(r'-?\d+', line))
+        bot[b].append(n)
+    if line.startswith('bot'):
+        who, n1, n2 = map(int,re.findall(r'-?\d+', line))
+        t1, t2 = re.findall(r' (bot|output)', line)
+        pipeline[who] = (t1,n1),(t2,n2)
+
+print(pipeline)
+
+while bot:
+    for k,v in dict(bot).items():
+        if len(v) == 2:
+            v1, v2 = sorted(bot.pop(k))
+            if v1==17 and v2==61: print(k)
+            (t1,n1),(t2,n2) = pipeline[k]
+            eval(t1)[n1].append(v1)
+            eval(t2)[n2].append(v2)
+
+
+a,b,c = (output[k][0] for k in [0,1,2])
+print(a*b*c)

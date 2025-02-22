@@ -24,7 +24,7 @@ def decompress_string(content: str) -> str:
     return content
 
 
-# decompression version2, 2b and 2c all work, but only 2c in decent amount of time for long input
+# decompression version2, 2b and 2c all work, but only 2b & 2c in decent amount of time for long input
 
 def decompress_string_version2(content: str) -> str:
     if '(' not in content:
@@ -53,7 +53,7 @@ def decompress_string_version2b(content: str) -> int | str:
     part2 = components[2]
     repeat = part2[:a]
     remainder = part2[a:]
-    len_content = decompress_string_version2b(part1 + repeat * b) + decompress_string_version2b(remainder)
+    len_content = decompress_string_version2b(part1) + b * decompress_string_version2b(repeat) + decompress_string_version2b(remainder)
 
     return len_content
 
@@ -98,7 +98,7 @@ def compute_part_two(file_name: str) -> str:
     content = read_input_file(file_name)
     print(content)
 
-    decompressed_length = decompress_string_version2c(content)
+    decompressed_length = decompress_string_version2b(content)
     print(f'{decompressed_length= }')
 
     return f'{decompressed_length= }'
