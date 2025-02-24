@@ -16,7 +16,6 @@ def compute_part_one(file_name: str) -> str:
     return "part 1 not yet implemented"
 
 
-
 def compute_part_two(file_name: str) -> str:
     content = read_input_file(file_name)
     return "part 2 not yet implemented"

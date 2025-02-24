@@ -1,6 +1,7 @@
 from collections import deque
 
 # if all elements are above floor-0, no need to return here.
+# needed for part II, otherwise it will take forever to run.
 completed_floors = set()
 
 
@@ -76,11 +77,17 @@ def bfs(start, goal):
     return -1
 
 
-initial_state = (0, (0, 1, 0, 2))  # (elevator, (HM, HG, LM, LG))
-goal_state = (3, (3, 3, 3, 3))
+# # Example
+# initial_state = (0, (0, 1, 0, 2))  # (elevator, (HM, HG, LM, LG))
+# goal_state = (3, (3, 3, 3, 3))
 
-initial_state = (0, (0, 0, 0, 0, 2, 1, 1, 1, 1, 1, 0, 0, 0, 0))  # (elevator, (SM, SG, PM, PG, TM, TG, RM, RG, CM, CG))
-goal_state = (3, (3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3))
+# part I
+initial_state = (0, (0, 0, 0, 0, 2, 1, 1, 1, 1, 1))  # (elevator, (SM, SG, PM, PG, TM, TG, RM, RG, CM, CG))
+goal_state = (3, (3, 3, 3, 3, 3, 3, 3, 3, 3, 3))
+
+# # part II
+# initial_state = (0, (0, 0, 0, 0, 2, 1, 1, 1, 1, 1, 0, 0, 0, 0))  # (elevator, (SM, SG, PM, PG, TM, TG, RM, RG, CM, CG))
+# goal_state = (3, (3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3))
 
 steps = bfs(initial_state, goal_state)
 print(f"Minimum steps required: {steps}")
