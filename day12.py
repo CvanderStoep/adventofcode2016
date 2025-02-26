@@ -1,11 +1,15 @@
-def read_input_file(file_name: str) -> list:
+from typing import List, Dict
+
+
+def read_input_file(file_name: str) -> List[str]:
+    """Reads input file and returns content as a list of strings."""
     with open(file_name) as f:
         content = f.read().splitlines()
-
     return content
 
 
-def process_instruction(position: int, instructions: list, registers: dict) -> int:
+def process_instruction(position: int, instructions: List[str], registers: Dict[str, int]) -> int:
+    """Processes a single instruction and updates the registers."""
     instruction = instructions[position].split(' ')
 
     if instruction[0] == 'inc':
@@ -33,31 +37,17 @@ def process_instruction(position: int, instructions: list, registers: dict) -> i
     return position
 
 
-def compute_part_one(file_name: str) -> str:
+def compute(file_name: str, initial_c: int = 0) -> str:
+    """Computes the value of register 'a' after processing all instructions."""
     instructions = read_input_file(file_name)
-    print(instructions)
-    registers = {'a': 0, 'b': 0, 'c': 0, 'd': 0}
+    registers = {'a': 0, 'b': 0, 'c': initial_c, 'd': 0}
     position = 0
     while position < len(instructions):
         position = process_instruction(position, instructions, registers)
-
-    print(registers)
-
-    return f'{registers["a"]= }'
-
-
-def compute_part_two(file_name: str) -> str:
-    instructions = read_input_file(file_name)
-    registers = {'a': 0, 'b': 0, 'c': 1, 'd': 0}
-    position = 0
-    while position < len(instructions):
-        position = process_instruction(position, instructions, registers)
-
-    print(registers)
 
     return f'{registers["a"]= }'
 
 
 if __name__ == '__main__':
-    print(f"Part I: {compute_part_one('input/input12.txt')}")
-    print(f"Part II: {compute_part_two('input/input12.txt')}")
+    print(f"Part I: {compute('input/input12.txt')}")
+    print(f"Part II: {compute('input/input12.txt', initial_c=1)}")
