@@ -5,21 +5,24 @@ def sort_string(string: str) -> str:
     return ''.join(sorted(string))
 
 
-def is_valid(left, right) -> bool:
-    if 'B' in left:
-        state = right
-    else:
-        state = left
+def is_valid(left: str, right: str) -> bool:
+    # if 'B' in left:
+    #     state = right
+    # else:
+    #     state = left
 
-    if 'K' in state and 'G' in state:
+    check_state = right if 'B' in left else left
+
+    if 'K' in check_state and 'G' in check_state:
         return False
-    if 'G' in state and 'W' in state:
+    if 'G' in check_state and 'W' in check_state:
         return False
 
     return True
 
 
 left = 'BGKW'
+goal = 'BGKW'
 right = ''
 visited = set()
 queue = deque([(0, left, right, [])])
@@ -33,11 +36,11 @@ def add_queue(steps, left, right, path):
 
 while queue:
     steps, left, right, path = queue.popleft()
-    # print(steps, left, right)
-    if left == '' and right == 'BGKW':
+    print(steps, left, right)
+    if right == goal:
         print(f'Solution found in {steps} steps')
         print('Steps taken:')
-        print('BGKW:')
+        print('Start: BGKW->')
         for step in path:
             print(step)
         break
