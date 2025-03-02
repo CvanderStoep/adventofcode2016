@@ -20,12 +20,12 @@ class Disc:
     positions: int
     start: int
 
-    def calculate(self, t):
+    def calculate_position_t(self, t):
         return (self.start + t) % self.positions
 
 
 def compute_part(file_name: str, part) -> str:
-    if part == 1:  # (part I)
+    if part == 1:
         discs = read_input_file(file_name)[:-1]
     else:
         discs = read_input_file(file_name)
@@ -33,15 +33,15 @@ def compute_part(file_name: str, part) -> str:
 
     for t in range(0, 10_000_000):
         fits = True
-        n = 1
-        while n <= len(discs):
-            disc = discs[n - 1]
-            t2 = t + n
-            f = disc.calculate(t2)
-            if f != 0:
+        disc_number = 1
+        while disc_number <= len(discs):
+            disc = discs[disc_number - 1]
+            t_disc_n = t + disc_number
+            position_disc_n = disc.calculate_position_t(t_disc_n)
+            if position_disc_n != 0:
                 fits = False
                 break
-            n += 1
+            disc_number += 1
         if fits:
             break
 
@@ -50,4 +50,4 @@ def compute_part(file_name: str, part) -> str:
 
 if __name__ == '__main__':
     print(f"Part I: {compute_part('input/input15.txt', part=1)}")
-    print(f"Part II: {compute_part('input/input15.txt', part = 2)}")
+    print(f"Part II: {compute_part('input/input15.txt', part=2)}")
