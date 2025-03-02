@@ -57,6 +57,7 @@ def compute(hash_function) -> str:
                 if five_string is not None and tree_string in five_string:
                     total_keys += 1
                     print(total_keys, i, j, tree_string, five_string)
+                    break
 
     return f'64th key at index {i}'
 
