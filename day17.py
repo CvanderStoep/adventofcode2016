@@ -2,7 +2,7 @@ import hashlib
 from collections import deque
 
 
-def read_input_file(file_name: str) -> list:
+def read_input_file(file_name: str) -> str:
     with open(file_name) as f:
         return f.read().strip()
 
@@ -16,14 +16,14 @@ def md5_hash_string(input_string):
 def is_valid(code: str, direction: str) -> bool:
     valid = 'bcdef'
     hashed = md5_hash_string(code)
-    U, D, L, R = hashed[0], hashed[1], hashed[2], hashed[3]
-    if U in valid and direction == 'U':
+    u, d, l, r = hashed[0], hashed[1], hashed[2], hashed[3]
+    if u in valid and direction == 'U':
         return True
-    if D in valid and direction == 'D':
+    if d in valid and direction == 'D':
         return True
-    if L in valid and direction == 'L':
+    if l in valid and direction == 'L':
         return True
-    if R in valid and direction == 'R':
+    if r in valid and direction == 'R':
         return True
 
     return False
