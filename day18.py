@@ -12,17 +12,17 @@ def is_safe(row: str, position: int) -> bool:
 
 
 def process_rules(row: str, position: int) -> str:
-    l = is_safe(row, position - 1)
-    c = is_safe(row, position)
-    r = is_safe(row, position + 1)
+    left = is_safe(row, position - 1)
+    center = is_safe(row, position)
+    right = is_safe(row, position + 1)
 
-    if not l and not c and r:
+    if not left and not center and right:
         return '^'
-    if not c and not r and l:
+    if not center and not right and left:
         return '^'
-    if not l and r and c:
+    if not left and right and center:
         return '^'
-    if not r and l and c:
+    if not right and left and center:
         return '^'
     return '.'
 
