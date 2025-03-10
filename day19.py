@@ -9,9 +9,10 @@ def read_input_file(file_name: str) -> int:
 def compute_part_one(file_name: str) -> str:
     number = read_input_file(file_name)
     print(f'{number= }')
-    queue = deque()
-    for n in range(1, number + 1):
-        queue.append(n)
+    # queue = deque()
+    # for n in range(1, number + 1):
+    #     queue.append(n)
+    queue = deque(range(1, number + 1))
 
     while queue:
         winner = queue.popleft()
@@ -25,9 +26,10 @@ def compute_part_one(file_name: str) -> str:
 def compute_part_two(file_name: str) -> str:
     """slow but it works..."""
     number = read_input_file(file_name)
-    elves = []
-    for n in range(1, number + 1):
-        elves.append(n)
+    # elves = []
+    # for n in range(1, number + 1):
+    #     elves.append(n)
+    elves = list(range(1, number + 1))
 
     while elves:
         len_elves_list = len(elves)
