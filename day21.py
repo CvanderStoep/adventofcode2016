@@ -39,7 +39,7 @@ def rotate_right(string, steps):
 
 def reverse_substring(string, i, j):
     # Ensure the indices are within the valid range
-    if i >= 0 and j < len(string) and i <= j:
+    if 0 <= i <= j < len(string):
         # Reverse the substring from index i to j
         return string[:i] + string[i:j + 1][::-1] + string[j + 1:]
     else:
