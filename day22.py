@@ -76,7 +76,7 @@ def compute_part_two(file_name: str) -> str:
 
     print('it takes 6 + 21 + 8 steps to get the 0-node to top right')
     print('it takes 5 switches to move the G-data one position to the left')
-    print('it takes 36 switches == 180 steps')
+    print('it takes 36 steps = 180 switches')
 
     fewest_number_of_steps = 36 * 5 + 6 + 21 + 8
 
